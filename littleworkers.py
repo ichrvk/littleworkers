@@ -1,5 +1,4 @@
 import logging
-import os
 import subprocess
 import time
 
@@ -101,7 +100,7 @@ class Pool(object):
         Given a provided command (string or list), creates a new process
         to execute the command.
         """
-        logging.debug("Starting process to handle command '%s'." % command)
+        logging.debug("Starting process to handle command '%s'.", command)
         kwargs = self.process_kwargs(command)
         return subprocess.Popen(command, **kwargs)
     
@@ -118,7 +117,7 @@ class Pool(object):
         """
         Adds a process to the pool.
         """
-        logging.debug("Adding %s to the pool." % proc.pid)
+        logging.debug("Adding %s to the pool.", proc.pid)
         self.pool[proc.pid] = proc
     
     def remove_from_pool(self, pid):
@@ -129,7 +128,7 @@ class Pool(object):
         ``Pool.debug = True``).
         """
         try:
-            logging.debug("Removing %s from the pool" % pid)
+            logging.debug("Removing %s from the pool", pid)
             del(self.pool[pid])
         except KeyError:
             if self.debug:
@@ -144,7 +143,7 @@ class Pool(object):
         """
         # Call ``len()`` just once.
         pool_size = len(self.pool)
-        logging.debug("Current pool size: %s" % pool_size)
+        logging.debug("Current pool size: %s", pool_size)
         return pool_size
     
     def busy_wait(self):
@@ -185,7 +184,7 @@ class Pool(object):
             
             # Go in reverse order so offsets never get screwed up.
             for pid in self.pool.keys():
-                logging.debug("Checking status on %s" % self.pool[pid].pid)
+                logging.debug("Checking status on %s", self.pool[pid].pid)
                 
                 if self.pool[pid].poll() >= 0:
                     if self.callback:
